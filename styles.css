@@ -27,6 +27,8 @@ body {
 
 .calc-display-container {
     display: flex;
+    justify-content: end;
+    align-items: center;
 
     height: 100px;
     width: 400px;
@@ -37,6 +39,21 @@ body {
     border-style: solid;
     border-color: black;
 }
+
+.calc-display-items {
+    display: flex;
+    align-items: center;
+    height: 90px;
+
+    /* testing the visual effect in the display */
+    border-style: solid;
+    border-color: black;
+
+    /* for clarity, create a separate class for all numbers*/
+    font-size: 75px;
+    font-family: monospace;
+}
+
 
 
 .calc-buttons-container {
