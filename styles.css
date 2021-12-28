@@ -45,10 +45,6 @@ body {
     align-items: center;
     height: 90px;
 
-    /* testing the visual effect in the display */
-    border-style: solid;
-    border-color: black;
-
     /* for clarity, create a separate class for all numbers*/
     font-size: 75px;
     font-family: monospace;
@@ -84,4 +80,8 @@ body {
     font-family: monospace;
 
     background-color: olivedrab;
+}
+
+.calc-buttons-items:hover {
+    background-color: darkolivegreen;
 }

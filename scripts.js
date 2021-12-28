@@ -43,3 +43,18 @@ function operate(operator, num1, num2){
 
 // the functions
 console.log(operate('*', 2, 5));
+
+
+// adding the buttons to the display when pressed
+const numberButtons = document.querySelectorAll('.calc-numbers');
+const calcDisplay = document.querySelector('.calc-display-container');
+
+numberButtons.forEach(number => {
+    number.addEventListener("click", function(){
+        let displayNumber = document.createElement('div');
+        displayNumber.textContent = number.value;
+        displayNumber.className = 'calc-display-items';
+        calcDisplay.appendChild(displayNumber);
+       console.log(number.value);
+    });
+})
