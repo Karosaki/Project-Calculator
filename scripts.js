@@ -41,20 +41,30 @@ function operate(operator, num1, num2){
     }
 }
 
-// the functions
-console.log(operate('*', 2, 5));
-
-
 // adding the buttons to the display when pressed
 const numberButtons = document.querySelectorAll('.calc-numbers');
 const calcDisplay = document.querySelector('.calc-display-container');
 
+console.log('Number of buttons: ' + numberButtons.length);
+
 numberButtons.forEach(number => {
     number.addEventListener("click", function(){
-        let displayNumber = document.createElement('div');
-        displayNumber.textContent = number.value;
-        displayNumber.className = 'calc-display-items';
-        calcDisplay.appendChild(displayNumber);
-       console.log(number.value);
+        let displayNumbers = document.querySelectorAll('.calc-display-items');
+        let numOfDisplayNumbers = 0;
+
+        // I want this function to work whilst there are less than 10 items in the list
+        // If the number of items is less than 10, the function will work
+        if(document.querySelectorAll('.calc-display-items').length < 9) {
+            console.log('yes');
+            let displayNumber = document.createElement('div');
+            displayNumber.textContent = number.value;
+            displayNumber.className = 'calc-display-items';
+            calcDisplay.appendChild(displayNumber);
+
+            numOfDisplayNumbers = document.querySelectorAll('.calc-display-items').length;
+            console.log(number.value);
+        }
+
+
     });
 })
