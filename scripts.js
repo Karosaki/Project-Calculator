@@ -186,6 +186,8 @@ evaluateButton.addEventListener("click", function(){
 
     // set the result to be the first number, so it can be used again
     firstNumber = result;
+    // clear the operator since i should not need it anymore
+    operator = '';
     console.log('first number is now ' + result);
     return result;
 });
@@ -203,9 +205,9 @@ clearButton.addEventListener("click", function (){
     // clear the display
     document.querySelectorAll('.calc-display-items').forEach(item => item.remove());
 
-    let firstNumber = 0;
-    let secondNumber = 0;
-    let operator = '';
+    firstNumber = 0;
+    secondNumber = 0;
+    operator = '';
     numberArray = [];
 });
 
