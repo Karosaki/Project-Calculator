@@ -113,13 +113,32 @@ operatorButtons.forEach(opButton => {
 
        if(opButton.value === 'subtract'){
            if(operator !== ''){
-             console.log('Placeholder');
-           };
+               console.log('an operator has already been pressed');
+               // simulate evaluate
+               evaluateButton.click();
+               console.log('first number for the next operation = ' + firstNumber);
+           }
+
+           else if (operator === ''){
+               console.log('another operator has not been pressed yet');
+               if(firstNumber === 0){
+                   console.log('The first number is not set yet');
+                   firstNumber = getNumber(numberArray);
+               }
+
+               else{
+                   console.log(`The first number is already ${firstNumber}`);
+               }
+               operator = '-';
+               document.querySelectorAll('.calc-display-items').forEach(item => item.remove());
+           }
        }
    });
 });
 
 evaluateButton.addEventListener("click", function(){
+    // clear the display
+    document.querySelectorAll('.calc-display-items').forEach(item => item.remove());
     // get the second number
     secondNumber = getNumber(numberArray);
     console.log(`first number: ${firstNumber}`);
@@ -127,6 +146,14 @@ evaluateButton.addEventListener("click", function(){
     // get the result, by using the operator on the first and second number
     let result = operate(operator, firstNumber, secondNumber);
     console.log('result is ' + result);
+    // populate the display with the result
+    let displayNumber = document.createElement('div');
+
+    // Set the display to be the number pressed by assigning the class and textContent values
+    displayNumber.textContent = result
+    displayNumber.className = 'calc-display-items';
+    calcDisplay.appendChild(displayNumber);
+
     // set the result to be the first number, so it can be used again
     firstNumber = result;
     // clear the currently stored operator value
@@ -143,3 +170,4 @@ function getNumber(inputArray){
     numberArray = [];
     return firstNumber;
 }
+
