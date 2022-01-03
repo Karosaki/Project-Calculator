@@ -44,27 +44,102 @@ function operate(operator, num1, num2){
 // adding the buttons to the display when pressed
 const numberButtons = document.querySelectorAll('.calc-numbers');
 const calcDisplay = document.querySelector('.calc-display-container');
+const operatorButtons = document.querySelectorAll('.calc-operators');
+const evaluateButton = document.querySelector('.calc-evaluate');
 
-console.log('Number of buttons: ' + numberButtons.length);
+// Array buffer, for building up the first number being selected
+// Outside the function as we don't want it to reset on every button click
+let numberArray = [];
 
 numberButtons.forEach(number => {
     number.addEventListener("click", function(){
-        let displayNumbers = document.querySelectorAll('.calc-display-items');
-        let numOfDisplayNumbers = 0;
-
         // I want this function to work whilst there are less than 10 items in the list
         // If the number of items is less than 10, the function will work
         if(document.querySelectorAll('.calc-display-items').length < 9) {
-            console.log('yes');
             let displayNumber = document.createElement('div');
+            // Store the number pressed into an array
+            numberArray.push(number.value);
+
+            // Set the display to be the number pressed by assigning the class and textContent values
             displayNumber.textContent = number.value;
             displayNumber.className = 'calc-display-items';
             calcDisplay.appendChild(displayNumber);
 
-            numOfDisplayNumbers = document.querySelectorAll('.calc-display-items').length;
+            // Logs for testing
             console.log(number.value);
+            console.log(numberArray);
         }
-
-
     });
-})
+});
+
+/*
+
+let numberString = ''
+numberArray.forEach(number => {
+    numberString.concat(number.toString());
+});
+
+ */
+let firstNumber = 0;
+let secondNumber = 0;
+let operator = '';
+
+operatorButtons.forEach(opButton => {
+   opButton.addEventListener("click", function(){
+       if(opButton.value === 'add'){
+           // checks to see if there is something already stored within the operator value
+           if(operator !== ''){
+               console.log('+ has already been pressed once')
+               // simulate the evaluate button to get the result
+               evaluateButton.click();
+               console.log('first number inside of the adding function = ' + firstNumber);
+           }
+
+           else if(operator === ''){
+               console.log('+ has not been pressed yet');
+               if(firstNumber === 0){
+                   console.log('The first number is not set yet');
+                   firstNumber = getNumber(numberArray);
+               }
+
+               else{
+                   console.log(`The first number is already ${firstNumber}`);
+               }
+               //firstNumber = getNumber(numberArray);
+               operator = '+';
+               document.querySelectorAll('.calc-display-items').forEach(item => item.remove());
+           }
+       }
+
+       if(opButton.value === 'subtract'){
+           if(operator !== ''){
+             console.log('Placeholder');
+           };
+       }
+   });
+});
+
+evaluateButton.addEventListener("click", function(){
+    // get the second number
+    secondNumber = getNumber(numberArray);
+    console.log(`first number: ${firstNumber}`);
+    console.log(`second number: ${secondNumber}`);
+    // get the result, by using the operator on the first and second number
+    let result = operate(operator, firstNumber, secondNumber);
+    console.log('result is ' + result);
+    // set the result to be the first number, so it can be used again
+    firstNumber = result;
+    // clear the currently stored operator value
+    operator = ''
+    console.log('first number is now ' + result);
+    return result;
+});
+
+function getNumber(inputArray){
+    let firstNumber = numberArray.toString();
+    firstNumber = firstNumber.replace(/,/g,'');
+    firstNumber = parseInt(firstNumber);
+    // empty the array leaving space for another number
+    numberArray = [];
+    return firstNumber;
+}
