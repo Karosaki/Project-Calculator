@@ -46,6 +46,7 @@ const numberButtons = document.querySelectorAll('.calc-numbers');
 const calcDisplay = document.querySelector('.calc-display-container');
 const operatorButtons = document.querySelectorAll('.calc-operators');
 const evaluateButton = document.querySelector('.calc-evaluate');
+const clearButton = document.querySelector('.clear');
 
 // Array buffer, for building up the first number being selected
 // Outside the function as we don't want it to reset on every button click
@@ -74,11 +75,6 @@ numberButtons.forEach(number => {
 
 /*
 
-let numberString = ''
-numberArray.forEach(number => {
-    numberString.concat(number.toString());
-});
-
  */
 let firstNumber = 0;
 let secondNumber = 0;
@@ -93,9 +89,10 @@ operatorButtons.forEach(opButton => {
                // simulate the evaluate button to get the result
                evaluateButton.click();
                console.log('first number inside of the adding function = ' + firstNumber);
+               operator = '';
            }
 
-           else if(operator === ''){
+           if(operator === ''){
                console.log('+ has not been pressed yet');
                if(firstNumber === 0){
                    console.log('The first number is not set yet');
@@ -117,9 +114,10 @@ operatorButtons.forEach(opButton => {
                // simulate evaluate
                evaluateButton.click();
                console.log('first number for the next operation = ' + firstNumber);
+               operator = '';
            }
 
-           else if (operator === ''){
+           if (operator === ''){
                console.log('another operator has not been pressed yet');
                if(firstNumber === 0){
                    console.log('The first number is not set yet');
@@ -130,6 +128,38 @@ operatorButtons.forEach(opButton => {
                    console.log(`The first number is already ${firstNumber}`);
                }
                operator = '-';
+               document.querySelectorAll('.calc-display-items').forEach(item => item.remove());
+           }
+       }
+
+       if(opButton.value === 'multiply'){
+           if(operator !== ''){
+               evaluateButton.click();
+               operator = '';
+           }
+
+           if (operator === ''){
+               if(firstNumber === 0){
+                   firstNumber = getNumber(numberArray);
+               }
+
+               operator = '*'
+               document.querySelectorAll('.calc-display-items').forEach(item => item.remove());
+           }
+       }
+
+       if(opButton.value === 'divide'){
+           if(operator !== ''){
+               evaluateButton.click();
+               operator = '';
+           }
+
+           if (operator === ''){
+               if(firstNumber === 0){
+                   firstNumber = getNumber(numberArray);
+               }
+
+               operator = '/'
                document.querySelectorAll('.calc-display-items').forEach(item => item.remove());
            }
        }
@@ -156,8 +186,6 @@ evaluateButton.addEventListener("click", function(){
 
     // set the result to be the first number, so it can be used again
     firstNumber = result;
-    // clear the currently stored operator value
-    operator = ''
     console.log('first number is now ' + result);
     return result;
 });
@@ -170,4 +198,14 @@ function getNumber(inputArray){
     numberArray = [];
     return firstNumber;
 }
+
+clearButton.addEventListener("click", function (){
+    // clear the display
+    document.querySelectorAll('.calc-display-items').forEach(item => item.remove());
+
+    let firstNumber = 0;
+    let secondNumber = 0;
+    let operator = '';
+    numberArray = [];
+});
 
